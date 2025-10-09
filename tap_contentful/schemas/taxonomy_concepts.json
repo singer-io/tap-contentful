@@ -1,1 +1,368 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "sys": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "organization": {
+          "type": "object",
+          "properties": {
+            "sys": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "linkType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "createdBy": {
+          "type": "object",
+          "properties": {
+            "sys": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "linkType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "updatedBy": {
+          "type": "object",
+          "properties": {
+            "sys": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "linkType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "uri": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prefLabel": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "altLabels": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "hiddenLabels": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "notations": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "changeNote": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "definition": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "editorialNote": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "example": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "historyNote": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "scopeNote": {
+      "type": "object",
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "broader": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "sys": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "linkType": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "related": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "sys": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "linkType": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "conceptSchemes": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "sys": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "linkType": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
