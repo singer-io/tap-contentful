@@ -263,51 +263,63 @@
         },
         "fields": {
             "type": [
-                "object",
+                "array",
                 "null"
             ],
-            "properties": {
-                "name": {
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "id": {
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "type": {
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "localized": {
-                    "type": [
-                        "boolean",
-                        "null"
-                    ]
-                },
-                "required": {
-                    "type": [
-                        "boolean",
-                        "null"
-                    ]
-                },
-                "disabled": {
-                    "type": [
-                        "boolean",
-                        "null"
-                    ]
-                },
-                "omitted": {
-                    "type": [
-                        "boolean",
-                        "null"
-                    ]
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "name": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "type": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "localized": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    },
+                    "required": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    },
+                    "validations": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "disabled": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    },
+                    "omitted": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ]
+                    }
                 }
             }
         }

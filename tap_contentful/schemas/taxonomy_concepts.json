@@ -197,7 +197,10 @@
       }
     },
     "changeNote": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
