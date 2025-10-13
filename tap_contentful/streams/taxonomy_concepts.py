@@ -10,3 +10,13 @@ class TaxonomyConcepts(ChildBaseStream):
     parent = "organizations"
     bookmark_value = None
 
+    def get_url_endpoint(self, parent_obj=None):
+        """Prepare URL endpoint for child streams."""
+        env_id = self.get_nested_value(parent_obj, 'sys.id')
+        return f"{self.client.base_url}{self.path.format(organizationId=env_id)}"
+    
+    def update_params(self, date = None, **kwargs) -> None:
+        """
+        Update params for the stream
+        """
+        self.params.update({'sys.updatedAt[gte]': date})

@@ -99,7 +99,6 @@ class BaseStream(ABC):
 
     def get_records(self) -> Iterator:
         """Interacts with api client interaction and pagination."""
-        self.params["cursor"] = self.page_size
         next_page = 1
         while next_page:
             response = self.client.make_request(
@@ -200,7 +199,7 @@ class IncrementalStream(BaseStream):
         """Implementation for `type: Incremental` stream."""
         bookmark_date = self.get_bookmark(state, self.tap_stream_id)
         current_max_bookmark_date = bookmark_date
-        self.update_params(updated_since=bookmark_date)
+        self.update_params(date=bookmark_date)
         self.update_data_payload(parent_obj=parent_obj)
         self.url_endpoint = self.get_url_endpoint(parent_obj)
 
