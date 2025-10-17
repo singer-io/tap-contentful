@@ -1,0 +1,194 @@
+{
+    "tap_name": "contentful",
+    "required_config_keys": [
+        "api_token",
+        "space_id",
+        "start_date"
+    ],
+    "page_size": null,
+    "next_page_key": "pages.next",
+    "pagination_key": "cursor",
+    "headers": {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    },
+    "params": {},
+    "auth_header_key": "Authorization",
+    "auth_config_key": "api_token",
+    "base_url": "https://api.contentful.com",
+    "streams": [
+        {
+            "name": "environments",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/spaces/{space_id}/environments",
+            "children": ["content_types", "entries", "assets", "locales", "tags", "tasks"],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/environments/environment-collection/get-all-environments-of-a-space/console/curl"
+        },
+        {
+            "name": "organizations",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/organizations",
+            "parent": null,
+            "children": ["security_contacts", "environment_templates", "taxonomy_concepts"],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/organizations/organizations-collection/get-all-organizations-an-account-has-access-to/console/curl"
+        },
+        {
+            "name": "security_contacts",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/organizations/{organization_id}/security_contacts",
+            "parent": "organizations",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/security-contacts/security-contacts-collection/get-an-organization-security-contacts-an-admin-or-owner-has-access-to/console/curl"
+        },
+        {
+            "name": "content_types",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/spaces/{space_id}/environments/{environment_id}/content_types",
+            "parent": "environments",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/content-types/content-type-collection/get-all-content-types-of-a-space/console/curl"
+        },
+        {
+            "name": "environment_templates",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/organizations/{organization_id}/environment_templates",
+            "parent": "organizations",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/content-model-templates/get-all-environment-templates/get-all-environment-templates/console/curl"
+        },
+        {
+            "name": "entries",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/spaces/{space_id}/environments/{environment_id}/entries",
+            "parent": "environments",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/entries/entries-collection/get-all-entries-of-a-space/console/curl"
+        },
+        {
+            "name": "assets",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/spaces/{space_id}/environments/{environment_id}/assets",
+            "parent": "environments",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/assets/assets-collection/get-all-assets-of-a-space/console/curl"
+        },
+        {
+            "name": "locales",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/spaces/{space_id}/environments/{environment_id}/locales",
+            "parent": "environments",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/locales/locale-collection/get-all-locales-of-a-space/console/curl"
+        },
+        {
+            "name": "taxonomy_concepts",
+            "key_properties": "sys.id",
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/organizations/{organizationId}/taxonomy/concepts",
+            "parent": "organizations",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/taxonomy/concept-collection/get-concepts/console/curl"
+        },
+        {
+            "name": "tags",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/spaces/{space_id}/environments/{environment_id}/tags",
+            "parent": "environments",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/tags/tag-collection/get-all-tags/console/curl"
+        },
+        {
+            "name": "tasks",
+            "key_properties": [
+                "sys.id"
+            ],
+            "replication_method": "INCREMENTAL",
+            "replication_keys": [
+                "sys.updatedAt"
+            ],
+            "data_key": "items",
+            "path": "/spaces/{space_id}/environments/{environment_id}/tasks?filter=myPendingTasks",
+            "parent": "environments",
+            "children": [],
+            "doc_link": "https://www.contentful.com/developers/docs/references/content-management-api/#/reference/entry-tasks/assigned-tasks-collection/get-all-tasks-that-are-assigned-to-you/console/curl"
+        }
+    ],
+    "tap_tester_creds": {
+        "api_token": "API_TOKEN",
+        "space_id": "SPACE_ID",
+        "start_date": "start_date"
+    },
+    "author": "Stitch",
+    "third_party_dependencies": [
+        "singer-python==6.1.1",
+        "requests==2.32.4",
+        "backoff==2.2.1"
+    ]
+}
