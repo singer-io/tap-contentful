@@ -15,8 +15,4 @@ class Locales(ChildBaseStream):
         env_id = self.get_nested_value(parent_obj, 'sys.id')
         return f"{self.client.base_url}{self.path.format(space_id=self.client.config['space_id'], environment_id=env_id)}"
     
-    def update_params(self, date = None, **kwargs) -> None:
-        """
-        Update params for the stream
-        """
-        self.params.update({'sys.updatedAt[gte]': date})
+

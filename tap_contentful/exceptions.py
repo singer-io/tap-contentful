@@ -38,7 +38,23 @@ class contentfulUnprocessableEntityError(contentfulBackoffError):
 
 class contentfulRateLimitError(contentfulBackoffError):
     """class representing 429 status code."""
-    pass
+    def __init__(self, message=None, response=None):
+        """
+        Initialize the contentful_RateLimitError.
+        Sets the `retry_after` attribute from the 'X-Contentful-RateLimit-Reset' header if available.
+        """
+        self.response = response
+
+        # Use 'X-Contentful-RateLimit-Reset' header or fallback to 60 seconds
+        if response and hasattr(response, 'headers') and response.headers:
+            self.retry_after = int(response.headers.get('X-Contentful-RateLimit-Reset', 60))
+        else:
+            self.retry_after = 60
+
+        base_msg = message or "Rate limit hit"
+        retry_info = f"(Retry after {self.retry_after} seconds.)"
+        full_message = f"{base_msg} {retry_info}"
+        super().__init__(full_message, response=response)
 
 class contentfulInternalServerError(contentfulBackoffError):
     """class representing 500 status code."""

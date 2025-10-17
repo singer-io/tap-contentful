@@ -1,6 +1,6 @@
 from typing import Any, Dict, Mapping, Optional, Tuple
 
-import backoff
+import backoff, time
 import requests
 from requests import session
 from requests.exceptions import Timeout, ConnectionError, ChunkedEncodingError
@@ -34,6 +34,16 @@ def raise_for_error(response: requests.Response) -> None:
             "raise_exception", contentfulError
         )
         raise exc(message, response) from None
+
+
+def wait_if_retry_after(details):
+    """Backoff handler that checks for a 'retry_after' attribute in the exception
+    and sleeps for the specified duration to respect API rate limits.
+    """
+    exc = details['exception']
+    if hasattr(exc, 'retry_after') and exc.retry_after is not None:
+        time.sleep(exc.retry_after)  # Force exact wait
+
 
 class Client:
     """
@@ -95,16 +105,16 @@ class Client:
         )
 
     @backoff.on_exception(
-        wait_gen=backoff.expo,
+        wait_gen=lambda: backoff.expo(factor=2),
+        on_backoff=wait_if_retry_after,
         exception=(
             ConnectionResetError,
             ConnectionError,
             ChunkedEncodingError,
             Timeout,
-            contentfulBackoffError
+            contentfulBackoffError,
         ),
         max_tries=5,
-        factor=2,
     )
     def __make_request(
         self, method: str, endpoint: str, **kwargs
