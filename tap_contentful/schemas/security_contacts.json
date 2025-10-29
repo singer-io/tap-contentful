@@ -30,7 +30,7 @@
                 },
                 "version": {
                     "type": [
-                        "string",
+                        "integer",
                         "null"
                     ]
                 },
