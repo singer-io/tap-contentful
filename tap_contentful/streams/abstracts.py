@@ -325,4 +325,3 @@ class ChildBaseStream(IncrementalStream):
             self.bookmark_value = super().get_bookmark(state, stream)
 
         return self.bookmark_value
-
