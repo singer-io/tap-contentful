@@ -131,4 +131,3 @@ class Client:
                 raise ValueError(f"Unsupported method: {method}")
 
         return response.json()
-

@@ -14,4 +14,3 @@ class EnvironmentTemplates(ChildBaseStream):
         """Prepare URL endpoint for child streams."""
         env_id = self.get_nested_value(parent_obj, 'sys.id')
         return f"{self.client.base_url}{self.path.format(organization_id=env_id)}"
-

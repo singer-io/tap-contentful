@@ -14,5 +14,3 @@ class Locales(ChildBaseStream):
         """Prepare URL endpoint for child streams."""
         env_id = self.get_nested_value(parent_obj, 'sys.id')
         return f"{self.client.base_url}{self.path.format(space_id=self.client.config['space_id'], environment_id=env_id)}"
-    
-
