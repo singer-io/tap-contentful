@@ -2,30 +2,67 @@
     "type": "object",
     "properties": {
         "metadata": {
-            "type": "object",
+            "type": [
+                "object",
+                "null"
+            ],
             "properties": {
                 "tags": {
-                    "type": "array",
+                    "type": [
+                        "array",
+                        "null"
+                    ],
                     "items": {
-                        "type": "string"
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     }
                 },
                 "concepts": {
-                    "type": "array",
+                    "type": [
+                        "array",
+                        "null"
+                    ],
                     "items": {
-                        "type": "string"
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     }
                 }
             }
         },
+        "id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "updatedAt": {
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
+        },
         "sys": {
-            "type": "object",
+            "type": [
+                "object",
+                "null"
+            ],
             "properties": {
                 "space": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -76,10 +113,16 @@
                     "format": "date-time"
                 },
                 "environment": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "id": {
                                     "type": [
@@ -124,10 +167,16 @@
                     "format": "date-time"
                 },
                 "createdBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -152,10 +201,16 @@
                     }
                 },
                 "updatedBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -192,10 +247,16 @@
                     ]
                 },
                 "publishedBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -220,10 +281,16 @@
                     }
                 },
                 "fieldStatus": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "*": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "en-US": {
                                     "type": [
@@ -241,14 +308,23 @@
                         "array"
                     ],
                     "items": {
-                        "type": "string"
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     }
                 },
                 "contentType": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [

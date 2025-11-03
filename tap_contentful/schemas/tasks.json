@@ -57,6 +57,19 @@
             ],
             "format": "date-time"
         },
+        "id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "updatedAt": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "format": "date-time"
+        },
         "sys": {
             "type": [
                 "object",
