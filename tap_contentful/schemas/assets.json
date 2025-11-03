@@ -2,7 +2,10 @@
     "type": "object",
     "properties": {
         "metadata": {
-            "type": "object",
+            "type": [
+                "object",
+                "null"
+            ],
             "properties": {
                 "tags": {
                     "type": [
@@ -10,10 +13,16 @@
                         "null"
                     ],
                     "items": {
-                        "type": "object",
+                        "type": [
+                            "object",
+                            "null"
+                        ],
                         "properties": {
                             "sys": {
-                                "type": "object",
+                                "type": [
+                                    "object",
+                                    "null"
+                                ],
                                 "properties": {
                                     "type": {
                                         "type": [
@@ -47,14 +56,36 @@
                 }
             }
         },
+        "id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "updatedAt": {
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
+        },
         "sys": {
-            "type": "object",
+            "type": [
+                "object",
+                "null"
+            ],
             "properties": {
                 "space": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -105,10 +136,16 @@
                     "format": "date-time"
                 },
                 "environment": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "id": {
                                     "type": [
@@ -153,10 +190,16 @@
                     "format": "date-time"
                 },
                 "createdBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -181,10 +224,16 @@
                     }
                 },
                 "updatedBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -221,10 +270,16 @@
                     ]
                 },
                 "publishedBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -249,10 +304,16 @@
                     }
                 },
                 "fieldStatus": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "patternProperties": {
                         ".*": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "patternProperties": {
                                 ".*": {
                                     "type": [
@@ -273,10 +334,16 @@
             }
         },
         "fields": {
-            "type": "object",
+            "type": [
+                "object",
+                "null"
+            ],
             "properties": {
                 "title": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "en-US": {
                             "type": [
@@ -287,7 +354,10 @@
                     }
                 },
                 "description": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "en-US": {
                             "type": [
@@ -298,10 +368,16 @@
                     }
                 },
                 "file": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "en-US": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "url": {
                                     "type": [
@@ -310,7 +386,10 @@
                                     ]
                                 },
                                 "details": {
-                                    "type": "object",
+                                    "type": [
+                                        "object",
+                                        "null"
+                                    ],
                                     "properties": {
                                         "size": {
                                             "type": [
@@ -319,7 +398,10 @@
                                             ]
                                         },
                                         "image": {
-                                            "type": "object",
+                                            "type": [
+                                                "object",
+                                                "null"
+                                            ],
                                             "properties": {
                                                 "width": {
                                                     "type": [

@@ -1,6 +1,22 @@
 {
-  "type": "object",
+  "type": [
+    "object",
+    "null"
+  ],
   "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updatedAt": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
     "name": {
       "type": [
         "string",
@@ -8,7 +24,10 @@
       ]
     },
     "sys": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "type": {
           "type": [
@@ -29,10 +48,16 @@
           ]
         },
         "space": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "sys": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "properties": {
                 "type": {
                   "type": [
@@ -57,10 +82,16 @@
           }
         },
         "status": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "sys": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "properties": {
                 "type": {
                   "type": [
@@ -85,10 +116,16 @@
           }
         },
         "createdBy": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "sys": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "properties": {
                 "type": {
                   "type": [
@@ -120,10 +157,16 @@
           "format": "date-time"
         },
         "updatedBy": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "sys": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "properties": {
                 "type": {
                   "type": [

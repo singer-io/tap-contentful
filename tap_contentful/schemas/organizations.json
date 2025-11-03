@@ -4,6 +4,19 @@
         "null"
     ],
     "properties": {
+        "id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "updatedAt": {
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
+        },
         "sys": {
             "type": [
                 "object",

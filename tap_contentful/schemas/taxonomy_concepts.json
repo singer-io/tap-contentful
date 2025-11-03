@@ -1,8 +1,27 @@
 {
-  "type": "object",
+  "type": [
+    "object",
+    "null"
+  ],
   "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
     "sys": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "id": {
           "type": [
@@ -37,10 +56,16 @@
           "format": "date-time"
         },
         "organization": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "sys": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "properties": {
                 "id": {
                   "type": [
@@ -65,10 +90,16 @@
           }
         },
         "createdBy": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "sys": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "properties": {
                 "id": {
                   "type": [
@@ -93,10 +124,16 @@
           }
         },
         "updatedBy": {
-          "type": "object",
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
             "sys": {
-              "type": "object",
+              "type": [
+                "object",
+                "null"
+              ],
               "properties": {
                 "id": {
                   "type": [
@@ -129,7 +166,10 @@
       ]
     },
     "prefLabel": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -140,7 +180,10 @@
       }
     },
     "altLabels": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -157,7 +200,10 @@
       }
     },
     "hiddenLabels": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -186,7 +232,10 @@
       }
     },
     "note": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -211,7 +260,10 @@
       }
     },
     "definition": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -222,7 +274,10 @@
       }
     },
     "editorialNote": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -233,7 +288,10 @@
       }
     },
     "example": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -244,7 +302,10 @@
       }
     },
     "historyNote": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -255,7 +316,10 @@
       }
     },
     "scopeNote": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "en-US": {
           "type": [
@@ -271,10 +335,16 @@
         "null"
       ],
       "items": {
-        "type": "object",
+        "type": [
+          "object",
+          "null"
+        ],
         "properties": {
           "sys": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "properties": {
               "id": {
                 "type": [
@@ -305,10 +375,16 @@
         "null"
       ],
       "items": {
-        "type": "object",
+        "type": [
+          "object",
+          "null"
+        ],
         "properties": {
           "sys": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "properties": {
               "id": {
                 "type": [
@@ -339,10 +415,16 @@
         "null"
       ],
       "items": {
-        "type": "object",
+        "type": [
+          "object",
+          "null"
+        ],
         "properties": {
           "sys": {
-            "type": "object",
+            "type": [
+              "object",
+              "null"
+            ],
             "properties": {
               "id": {
                 "type": [

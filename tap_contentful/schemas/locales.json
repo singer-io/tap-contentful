@@ -1,5 +1,8 @@
 {
-    "type": "object",
+    "type": [
+        "object",
+        "null"
+    ],
     "properties": {
         "name": {
             "type": [
@@ -49,8 +52,24 @@
                 "boolean"
             ]
         },
+        "id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "updatedAt": {
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
+        },
         "sys": {
-            "type": "object",
+            "type": [
+                "object",
+                "null"
+            ],
             "properties": {
                 "type": {
                     "type": [
@@ -71,10 +90,16 @@
                     ]
                 },
                 "space": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -99,10 +124,16 @@
                     }
                 },
                 "environment": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -133,10 +164,16 @@
                     }
                 },
                 "createdBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [
@@ -168,10 +205,16 @@
                     "format": "date-time"
                 },
                 "updatedBy": {
-                    "type": "object",
+                    "type": [
+                        "object",
+                        "null"
+                    ],
                     "properties": {
                         "sys": {
-                            "type": "object",
+                            "type": [
+                                "object",
+                                "null"
+                            ],
                             "properties": {
                                 "type": {
                                     "type": [

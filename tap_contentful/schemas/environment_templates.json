@@ -4,6 +4,19 @@
         "null"
     ],
     "properties": {
+        "id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "updatedAt": {
+            "type": [
+                "null",
+                "string"
+            ],
+            "format": "date-time"
+        },
         "sys": {
             "type": [
                 "object",
@@ -182,7 +195,10 @@
                         "null"
                     ],
                     "items": {
-                        "type": "object",
+                        "type": [
+                            "object",
+                            "null"
+                        ],
                         "properties": {
                             "name": {
                                 "type": [
@@ -208,7 +224,10 @@
                                     "null"
                                 ],
                                 "items": {
-                                    "type": "object",
+                                    "type": [
+                                        "object",
+                                        "null"
+                                    ],
                                     "properties": {
                                         "id": {
                                             "type": [
@@ -246,7 +265,10 @@
                         "null"
                     ],
                     "items": {
-                        "type": "object",
+                        "type": [
+                            "object",
+                            "null"
+                        ],
                         "properties": {
                             "contentTypeTemplate": {
                                 "type": [
@@ -288,7 +310,10 @@
                                     "null"
                                 ],
                                 "items": {
-                                    "type": "object",
+                                    "type": [
+                                        "object",
+                                        "null"
+                                    ],
                                     "properties": {
                                         "fieldId": {
                                             "type": [

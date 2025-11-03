@@ -3,9 +3,9 @@ from typing import Dict
 
 class Environments(ParentBaseStream):
     tap_stream_id = "environments"
-    key_properties = ["sys.id"]
+    key_properties = ["id"]
     replication_method = "INCREMENTAL"
-    replication_keys = ["sys.updatedAt"]
+    replication_keys = ["updatedAt"]
     data_key = "items"
     path = "/spaces/{space_id}/environments"
     children = ["content_types", "entries", "assets", "locales", "tags", "tasks"]
