@@ -8,4 +8,3 @@ class Organizations(ParentBaseStream):
     data_key = "items"
     path = "/organizations"
     children = ["security_contacts", "environment_templates", "taxonomy_concepts"]
-
