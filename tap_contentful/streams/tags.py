@@ -20,3 +20,15 @@ class Tags(ChildBaseStream):
         Update params for the stream
         """
         self.params.update({'sys.updatedAt[gte]': date})
+
+    def modify_object(self, record, parent_record=None):
+            """
+            Modify the record before writing to the stream.
+            Move sys.id -> id and sys.updatedAt -> updatedAt
+            """
+            sys_data = record.get("sys", {})
+
+            record["id"] = sys_data.get("id")
+            record["updatedAt"] = sys_data.get("updatedAt")
+
+            return record

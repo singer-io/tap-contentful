@@ -14,3 +14,15 @@ class EnvironmentTemplates(ChildBaseStream):
         """Prepare URL endpoint for child streams."""
         env_id = self.get_nested_value(parent_obj, 'sys.id')
         return f"{self.client.base_url}{self.path.format(organization_id=env_id)}"
+
+    def modify_object(self, record, parent_record=None):
+            """
+            Modify the record before writing to the stream.
+            Move sys.id -> id and sys.updatedAt -> updatedAt
+            """
+            sys_data = record.get("sys", {})
+
+            record["id"] = sys_data.get("id")
+            record["updatedAt"] = sys_data.get("updatedAt")
+
+            return record
