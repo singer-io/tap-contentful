@@ -146,7 +146,7 @@ class BaseStream(ABC):
             params['sys.updatedAt[gte]'] = date
         params['order'] = 'sys.createdAt'
         params['limit'] = self.page_size
-        params['cursor'] =  'true'
+        params['cursor'] = 'true'
         self.params.update(params)
 
     def update_data_payload(self, **kwargs) -> None:
