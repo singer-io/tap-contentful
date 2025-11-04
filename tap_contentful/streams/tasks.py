@@ -12,7 +12,7 @@ class Tasks(ChildBaseStream):
 
     def get_url_endpoint(self, parent_obj=None):
         """Prepare URL endpoint for child streams."""
-        env_id = self.get_nested_value(parent_obj, 'sys.id')
+        env_id = self.get_nested_value(parent_obj, 'id')
         return f"{self.client.base_url}{self.path.format(space_id=self.client.config['space_id'], environment_id=env_id)}"
 
     def modify_object(self, record, parent_record=None):
