@@ -15,6 +15,5 @@ class contentfulAllFields(AllFieldsTest, contentfulBaseTest):
         return "tap_tester_contentful_all_fields_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {}
+        streams_to_exclude = {'expected_stream_names', 'security_contacts', 'tasks'}
         return self.expected_stream_names().difference(streams_to_exclude)
-

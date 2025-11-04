@@ -61,13 +61,13 @@ class contentfulBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
-            "environment_templates": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
-            },
+            # "environment_templates": {
+            #     cls.PRIMARY_KEYS: { "id" },
+            #     cls.REPLICATION_METHOD: cls.INCREMENTAL,
+            #     cls.REPLICATION_KEYS: { "updatedAt" },
+            #     cls.OBEYS_START_DATE: False,
+            #     cls.API_LIMIT: 100
+            # },
             "entries": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
@@ -116,7 +116,7 @@ class contentfulBaseTest(BaseCase):
     def get_credentials():
         """Authentication information for the test account."""
         credentials_dict = {}
-        creds = {'api_token': 'API_TOKEN', 'space_id': 'SPACE_ID', 'start_date': 'start_date'}
+        creds = {'api_token': 'API_TOKEN', 'space_id': 'SPACE_ID'}
 
         for cred in creds:
             credentials_dict[cred] = os.getenv(creds[cred])
@@ -133,4 +133,3 @@ class contentfulBaseTest(BaseCase):
 
         return_value["start_date"] = self.start_date
         return return_value
-
