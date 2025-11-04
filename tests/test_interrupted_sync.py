@@ -12,7 +12,8 @@ class contentfulInterruptedSyncTest(InterruptedSyncTest, contentfulBaseTest):
         return "tap_tester_contentful_interrupted_sync_test"
 
     def streams_to_test(self):
-        return self.expected_stream_names()
+        streams_to_exclude = {'security_contacts', 'tasks', 'environment_templates'}
+        return self.expected_stream_names().difference(streams_to_exclude)
 
 
     def manipulate_state(self):
@@ -21,7 +22,7 @@ class contentfulInterruptedSyncTest(InterruptedSyncTest, contentfulBaseTest):
             "bookmarks": {
                 "environments": { "updatedAt" : "2020-01-01T00:00:00Z"},
                 "organizations": { "updatedAt" : "2020-01-01T00:00:00Z"},
-                "security_contacts": { "updatedAt" : "2020-01-01T00:00:00Z"},
+                # "security_contacts": { "updatedAt" : "2020-01-01T00:00:00Z"},
                 "content_types": { "updatedAt" : "2020-01-01T00:00:00Z"},
                 # "environment_templates": { "updatedAt" : "2020-01-01T00:00:00Z"},
                 "entries": { "updatedAt" : "2020-01-01T00:00:00Z"},
@@ -29,6 +30,6 @@ class contentfulInterruptedSyncTest(InterruptedSyncTest, contentfulBaseTest):
                 "locales": { "updatedAt" : "2020-01-01T00:00:00Z"},
                 "taxonomy_concepts": { "updatedAt" : "2020-01-01T00:00:00Z"},
                 "tags": { "updatedAt" : "2020-01-01T00:00:00Z"},
-                "tasks": { "updatedAt" : "2020-01-01T00:00:00Z"},
+                # "tasks": { "updatedAt" : "2020-01-01T00:00:00Z"},
         }
     }

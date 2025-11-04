@@ -61,13 +61,13 @@ class contentfulBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
-            # "environment_templates": {
-            #     cls.PRIMARY_KEYS: { "id" },
-            #     cls.REPLICATION_METHOD: cls.INCREMENTAL,
-            #     cls.REPLICATION_KEYS: { "updatedAt" },
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 100
-            # },
+            "environment_templates": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.INCREMENTAL,
+                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 100
+            },
             "entries": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,

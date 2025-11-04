@@ -12,7 +12,7 @@ class contentfulStartDateTest(StartDateTest, contentfulBaseTest):
         return "tap_tester_contentful_start_date_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {'expected_stream_names', 'tasks', 'security_contacts'}
+        streams_to_exclude = {'environment_templates', 'tasks', 'security_contacts'}
         return self.expected_stream_names().difference(streams_to_exclude)
 
     @property
