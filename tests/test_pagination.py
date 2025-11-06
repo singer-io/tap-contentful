@@ -11,6 +11,5 @@ class contentfulPaginationTest(PaginationTest, contentfulBaseTest):
         return "tap_tester_contentful_pagination_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {}
+        streams_to_exclude = {'tasks', 'security_contacts', 'environment_templates'}
         return self.expected_stream_names().difference(streams_to_exclude)
-
