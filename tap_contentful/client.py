@@ -6,7 +6,7 @@ from requests import session
 from requests.exceptions import Timeout, ConnectionError, ChunkedEncodingError
 from singer import get_logger, metrics
 
-from tap_contentful.exceptions import ERROR_CODE_EXCEPTION_MAPPING, contentfulError, contentfulBackoffError
+from tap_contentful.exceptions import ERROR_CODE_EXCEPTION_MAPPING, contentfulError, contentfulBackoffError, contentfulUnprocessableEntityError
 
 LOGGER = get_logger()
 REQUEST_TIMEOUT = 300
@@ -115,6 +115,7 @@ class Client:
             contentfulBackoffError,
         ),
         max_tries=5,
+        giveup=lambda e: isinstance(e, contentfulUnprocessableEntityError),
     )
     def __make_request(
         self, method: str, endpoint: str, **kwargs

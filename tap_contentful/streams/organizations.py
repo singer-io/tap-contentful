@@ -1,10 +1,10 @@
-from tap_contentful.streams.abstracts import ParentBaseStream
+from tap_contentful.streams.abstracts import FullTableStream
 
-class Organizations(ParentBaseStream):
+class Organizations(FullTableStream):
     tap_stream_id = "organizations"
     key_properties = ["id"]
-    replication_method = "INCREMENTAL"
-    replication_keys = ["updatedAt"]
+    replication_method = "FULL_TABLE"
+    replication_keys = []
     data_key = "items"
     path = "/organizations"
     children = ["security_contacts", "environment_templates", "taxonomy_concepts"]
@@ -17,6 +17,5 @@ class Organizations(ParentBaseStream):
             sys_data = record.get("sys", {})
 
             record["id"] = sys_data.get("id")
-            record["updatedAt"] = sys_data.get("updatedAt")
 
             return record

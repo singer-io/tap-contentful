@@ -1,11 +1,11 @@
-from tap_contentful.streams.abstracts import ParentBaseStream
+from tap_contentful.streams.abstracts import FullTableStream
 from typing import Dict
 
-class Environments(ParentBaseStream):
+class Environments(FullTableStream):
     tap_stream_id = "environments"
     key_properties = ["id"]
-    replication_method = "INCREMENTAL"
-    replication_keys = ["updatedAt"]
+    replication_method = "FULL_TABLE"
+    replication_keys = []
     data_key = "items"
     path = "/spaces/{space_id}/environments"
     children = ["content_types", "entries", "assets", "locales", "tags", "tasks"]
@@ -26,6 +26,5 @@ class Environments(ParentBaseStream):
             sys_data = record.get("sys", {})
 
             record["id"] = sys_data.get("id")
-            record["updatedAt"] = sys_data.get("updatedAt")
 
             return record
