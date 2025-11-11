@@ -23,4 +23,3 @@ STREAMS = {
     "tags": Tags,
     "tasks": Tasks,
 }
-

@@ -1,1 +1,453 @@
-{}
+{
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updatedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "sys": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "organization": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "sys": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "linkType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "createdBy": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "sys": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "linkType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "updatedBy": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "sys": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "type": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "linkType": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "uri": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prefLabel": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "altLabels": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "hiddenLabels": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "notations": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "note": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "changeNote": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "definition": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "editorialNote": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "example": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "historyNote": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "scopeNote": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "en-US": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "broader": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "sys": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "linkType": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "related": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "sys": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "linkType": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "conceptSchemes": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "sys": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "linkType": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

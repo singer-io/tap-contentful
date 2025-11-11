@@ -64,7 +64,9 @@ class Client:
 
     def authenticate(self, headers: Dict, params: Dict) -> Tuple[Dict, Dict]:
         """Authenticates the request with the token"""
-        headers["Authorization"] = self.config["api_token"]
+        headers["Authorization"] = f"Bearer {self.config['api_token']}"
+        headers["Content-Type"] = "application/vnd.contentful.management.v1+json"
+        headers["Accept"] = "application/json"
         return headers, params
 
     def make_request(

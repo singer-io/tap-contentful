@@ -33,9 +33,9 @@ class BaseStream(ABC):
     headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
     children = []
     parent = ""
-    data_key = ""
+    data_key = "items"
     parent_bookmark_key = ""
-    http_method = "POST"
+    http_method = "GET"
 
     def __init__(self, client=None, catalog=None) -> None:
         self.client = client
@@ -151,7 +151,18 @@ class BaseStream(ABC):
         Get the URL endpoint for the stream
         """
         return self.url_endpoint or f"{self.client.base_url}/{self.path}"
-
+    
+    def get_nested_value(self, data, key_path, default=None):
+        """
+        Recursively get a value from nested dicts using dot-separated key path.
+        """
+        keys = key_path.split(".")
+        for key in keys:
+            if isinstance(data, dict):
+                data = data.get(key, default)
+            else:
+                return default
+        return data
 
 class IncrementalStream(BaseStream):
     """Base Class for Incremental Stream."""
@@ -200,7 +211,7 @@ class IncrementalStream(BaseStream):
                     record, self.schema, self.metadata
                 )
 
-                record_bookmark = transformed_record[self.replication_keys[0]]
+                record_bookmark = self.get_nested_value(transformed_record, self.replication_keys[0])
                 if record_bookmark >= bookmark_date:
                     if self.is_selected():
                         write_record(self.tap_stream_id, transformed_record)
@@ -299,4 +310,3 @@ class ChildBaseStream(IncrementalStream):
             self.bookmark_value = super().get_bookmark(state, stream)
 
         return self.bookmark_value
-
