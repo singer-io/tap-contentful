@@ -26,3 +26,11 @@ class EnvironmentTemplates(ChildBaseStream):
             record["updatedAt"] = sys_data.get("updatedAt")
 
             return record
+
+    def update_params(self, date = None, **kwargs) -> None:
+        """
+        Update params for the stream
+        """
+        params = {}
+        params['limit'] = self.page_size
+        self.params.update(params)
