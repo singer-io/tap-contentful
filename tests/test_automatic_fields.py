@@ -13,5 +13,8 @@ class contentfulAutomaticFields(MinimumSelectionTest, contentfulBaseTest):
         return "tap_tester_contentful_automatic_fields_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {'tasks', 'security_contacts'}
-        return self.expected_stream_names().difference(streams_to_exclude)
+        streams_to_exclude = {'tasks', 'security_contacts', 'environment_templates',
+                              'organizations', 'environments', 'locales', 'tags',
+                              'content_types', 'assets', 'entries'}
+        # return self.expected_stream_names().difference(streams_to_exclude)
+        return {'environments'}

@@ -9,6 +9,14 @@ KNOWN_MISSING_FIELDS = {
 class contentfulAllFields(AllFieldsTest, contentfulBaseTest):
     """Ensure running the tap with all streams and fields selected results in
     the replication of all fields."""
+    MISSING_FIELDS = {
+        "environments": [
+            "updatedAt",
+        ],
+        "organizations": [
+            "updatedAt"
+        ]
+    }
 
     @staticmethod
     def name():

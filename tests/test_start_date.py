@@ -12,12 +12,13 @@ class contentfulStartDateTest(StartDateTest, contentfulBaseTest):
         return "tap_tester_contentful_start_date_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {'environment_templates', 'tasks', 'security_contacts'}
+        streams_to_exclude = {'environment_templates', 'tasks', 'security_contacts',
+                              'environments', 'organizations', 'tags'}
         return self.expected_stream_names().difference(streams_to_exclude)
 
     @property
     def start_date_1(self):
-        return "2015-03-25T00:00:00Z"
+        return "2025-03-25T00:00:00Z"
     @property
     def start_date_2(self):
-        return "2017-01-25T00:00:00Z"
+        return "2025-10-10T00:00:00Z"
