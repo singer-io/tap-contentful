@@ -10,6 +10,12 @@
         "null"
       ]
     },
+    "space_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "updatedAt": {
       "type": [
         "null",

@@ -1,8 +1,11 @@
 from tap_contentful.streams.abstracts import ChildBaseStream
+from singer import get_logger
+
+LOGGER = get_logger()
 
 class Assets(ChildBaseStream):
     tap_stream_id = "assets"
-    key_properties = ["id"]
+    key_properties = ["id", "space_id", "environment_id"]
     replication_method = "INCREMENTAL"
     replication_keys = ["updatedAt"]
     data_key = "items"
@@ -24,5 +27,8 @@ class Assets(ChildBaseStream):
 
             record["id"] = sys_data.get("id")
             record["updatedAt"] = sys_data.get("updatedAt")
+            if parent_record:
+                record["space_id"] = parent_record["sys"]["space"]["sys"]["id"]
+                record["environment_id"] = parent_record["sys"]["id"]
 
             return record

@@ -2,7 +2,7 @@ from tap_contentful.streams.abstracts import ChildBaseStream
 
 class SecurityContacts(ChildBaseStream):
     tap_stream_id = "security_contacts"
-    key_properties = ["id"]
+    key_properties = ["id","organization_id"]
     replication_method = "INCREMENTAL"
     replication_keys = ["updatedAt"]
     data_key = "items"
@@ -24,5 +24,8 @@ class SecurityContacts(ChildBaseStream):
 
             record["id"] = sys_data.get("id")
             record["updatedAt"] = sys_data.get("updatedAt")
+
+            if parent_record:
+                record["organization_id"] = parent_record["sys"]["id"]
 
             return record

@@ -10,6 +10,18 @@
                 "string"
             ]
         },
+        "space_id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "environment_id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
         "internal_code": {
             "type": [
                 "null",

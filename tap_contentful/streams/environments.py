@@ -3,7 +3,7 @@ from typing import Dict
 
 class Environments(FullTableStream):
     tap_stream_id = "environments"
-    key_properties = ["id"]
+    key_properties = ["id", "space_id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "items"
@@ -26,5 +26,6 @@ class Environments(FullTableStream):
             sys_data = record.get("sys", {})
 
             record["id"] = sys_data.get("id")
+            record["space_id"] = sys_data["space"]["sys"]["id"]
 
             return record

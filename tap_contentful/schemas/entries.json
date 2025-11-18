@@ -46,6 +46,18 @@
             ],
             "format": "date-time"
         },
+        "space_id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "environment_id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
         "sys": {
             "type": [
                 "object",

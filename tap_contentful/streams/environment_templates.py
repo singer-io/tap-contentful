@@ -25,6 +25,9 @@ class EnvironmentTemplates(ChildBaseStream):
             record["id"] = sys_data.get("id")
             record["updatedAt"] = sys_data.get("updatedAt")
 
+            if parent_record:
+                record["organization_id"] = parent_record["sys"]["id"]
+
             return record
 
     def update_params(self, date = None, **kwargs) -> None:
