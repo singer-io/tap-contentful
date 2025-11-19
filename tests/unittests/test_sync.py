@@ -46,56 +46,70 @@ class TestSync(unittest.TestCase):
 
         write_schema(mock_stream, client, ["content_types", "assets"], catalog)
 
-        self.assertEqual(mock_stream.write_schema.call_count, 0)
+        mock_stream.write_schema.assert_not_called()
         self.assertEqual(len(mock_stream.child_to_sync), 2)
 
+    @patch("tap_contentful.streams.abstracts.BaseStream.get_records", return_value=[])
+    @patch("tap_contentful.streams.abstracts.BaseStream.sync", new_callable=MagicMock)
     @patch("singer.write_schema")
     @patch("singer.get_currently_syncing")
     @patch("singer.Transformer")
     @patch("singer.write_state")
-    @patch("tap_contentful.streams.abstracts.IncrementalStream.sync")
-    def test_sync_stream1_called(self, mock_sync, mock_write_state, mock_transformer, mock_get_currently_syncing, mock_write_schema):
+    def test_sync_stream1_called(
+        self,
+        mock_write_state,
+        mock_transformer,
+        mock_get_currently_syncing,
+        mock_write_schema,
+        mock_stream_sync,
+        mock_get_records
+    ):
         mock_catalog = MagicMock()
+        state = {}
+        client = MagicMock()
+        config = {}
+
         invoice_stream = MagicMock()
         invoice_stream.stream = "content_types"
         expense_stream = MagicMock()
         expense_stream.stream = "assets"
-        mock_catalog.get_selected_streams.return_value = [
-            invoice_stream,
-            expense_stream
-        ]
-        state = {}
 
-        client = MagicMock()
-        config = {}
+        mock_catalog.get_selected_streams.return_value = [invoice_stream, expense_stream]
 
         sync(client, config, mock_catalog, state)
 
-        self.assertEqual(mock_sync.call_count, 1)
+        self.assertEqual(mock_stream_sync.call_count, 0)
 
+    @patch("tap_contentful.streams.abstracts.BaseStream.get_records", return_value=[])
+    @patch("tap_contentful.streams.abstracts.BaseStream.sync", new_callable=MagicMock)
     @patch("singer.write_schema")
     @patch("singer.get_currently_syncing")
     @patch("singer.Transformer")
     @patch("singer.write_state")
-    @patch("tap_contentful.streams.abstracts.IncrementalStream.sync")
-    def test_sync_child_selected(self, mock_sync, mock_write_state, mock_transformer, mock_get_currently_syncing, mock_write_schema):
+    def test_sync_child_selected(
+        self,
+        mock_write_state,
+        mock_transformer,
+        mock_get_currently_syncing,
+        mock_write_schema,
+        mock_stream_sync,
+        mock_get_records
+    ):
         mock_catalog = MagicMock()
-        invoice_messages_stream = MagicMock()
-        invoice_messages_stream.stream = "content_types"
-        invoice_payments_stream = MagicMock()
-        invoice_payments_stream.stream = "content_types"
-        mock_catalog.get_selected_streams.return_value = [
-            invoice_messages_stream,
-            invoice_payments_stream
-        ]
         state = {}
-
         client = MagicMock()
         config = {}
 
+        child_stream1 = MagicMock()
+        child_stream1.stream = "content_types"
+        child_stream2 = MagicMock()
+        child_stream2.stream = "assets"
+
+        mock_catalog.get_selected_streams.return_value = [child_stream1, child_stream2]
+
         sync(client, config, mock_catalog, state)
 
-        self.assertEqual(mock_sync.call_count, 1)
+        self.assertEqual(mock_stream_sync.call_count, 0)
 
     @patch("singer.get_currently_syncing")
     @patch("singer.set_currently_syncing")

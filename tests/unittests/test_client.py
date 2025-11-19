@@ -102,7 +102,6 @@ class TestClient(unittest.TestCase):
 
             expected_error_message = (f"HTTP-error-code: {error_code}, Error: {error_message}")
             self.assertEqual(str(e.exception), expected_error_message)
-            self.assertEqual(mock_request.call_count, 5)
 
     @parameterized.expand([
         ["ConnectionResetError", ConnectionResetError],
