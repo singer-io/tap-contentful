@@ -34,77 +34,77 @@ class contentfulBaseTest(BaseCase):
         """The expected streams and metadata about the streams."""
         return {
             "environments": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "space_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "organizations": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "security_contacts": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "organization_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "content_types": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id","space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "environment_templates": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "organization_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "entries": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "assets": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "locales": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "taxonomy_concepts": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "organization_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "tags": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "tasks": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
                 cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,

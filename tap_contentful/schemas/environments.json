@@ -16,13 +16,6 @@
         "null"
       ]
     },
-    "updatedAt": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
-    },
     "name": {
       "type": [
         "string",
