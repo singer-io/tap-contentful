@@ -24,8 +24,6 @@ class SecurityContacts(ChildBaseStream):
 
             record["id"] = sys_data.get("id")
             record["updatedAt"] = sys_data.get("updatedAt")
-
-            if parent_record:
-                record["organization_id"] = parent_record["sys"]["id"]
+            record["organization_id"] = sys_data["id"]
 
             return record

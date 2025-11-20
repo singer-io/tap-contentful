@@ -12,8 +12,17 @@ class contentfulStartDateTest(StartDateTest, contentfulBaseTest):
         return "tap_tester_contentful_start_date_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {'environment_templates', 'tasks', 'security_contacts',
-                              'environments', 'organizations', 'tags'}
+        streams_to_exclude = {
+            # Less data available for streams
+            'security_contacts',
+            'tags',
+            'tasks',
+            # Unsupported Full-Table Streams
+            'environments',
+            'organizations',
+            # Not have permission
+            'environment_templates'
+        }
         return self.expected_stream_names().difference(streams_to_exclude)
 
     @property

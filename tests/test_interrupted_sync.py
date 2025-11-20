@@ -12,7 +12,17 @@ class contentfulInterruptedSyncTest(InterruptedSyncTest, contentfulBaseTest):
         return "tap_tester_contentful_interrupted_sync_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {'security_contacts', 'tasks', 'environment_templates', 'environments', 'organizations', 'content_types'}
+        streams_to_exclude = {
+            # Less data available for streams
+            'security_contacts',
+            'tasks',
+            'content_types',
+            # Unsupported Full-Table Streams
+            'environments',
+            'organizations',
+            # Not have permission
+            'environment_templates'
+        }
         return self.expected_stream_names().difference(streams_to_exclude)
 
 

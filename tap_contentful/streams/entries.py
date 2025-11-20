@@ -24,9 +24,7 @@ class Entries(ChildBaseStream):
 
             record["id"] = sys_data.get("id")
             record["updatedAt"] = sys_data.get("updatedAt")
-
-            if parent_record:
-                record["space_id"] = parent_record["sys"]["space"]["sys"]["id"]
-                record["environment_id"] = parent_record["sys"]["id"]
+            record["space_id"] = sys_data["space"]["sys"]["id"]
+            record["environment_id"] = sys_data["environment"]["sys"]["id"]
 
             return record
