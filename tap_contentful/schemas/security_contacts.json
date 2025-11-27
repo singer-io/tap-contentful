@@ -16,6 +16,12 @@
                 "null"
             ]
         },
+        "organization_id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
         "updatedAt": {
             "type": [
                 "string",

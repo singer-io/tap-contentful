@@ -62,6 +62,18 @@
                 "null"
             ]
         },
+        "space_id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "environment_id": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
         "updatedAt": {
             "type": [
                 "null",

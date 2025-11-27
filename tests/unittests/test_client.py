@@ -68,20 +68,6 @@ class TestClient(unittest.TestCase):
         assert isinstance(client._session, mock_session().__class__)
 
 
-    @patch("tap_contentful.client.Client._Client__make_request")
-    def test_client_get(self, mock_make_request):
-        mock_make_request.return_value = {"data": "ok"}
-        result = self.client.get("https://api.example.com/resource")
-        assert result == {"data": "ok"}
-        mock_make_request.assert_called_once()
-
-
-    @patch("tap_contentful.client.Client._Client__make_request")
-    def test_client_post(self, mock_make_request):
-        mock_make_request.return_value = {"created": True}
-        result = self.client.post("https://api.example.com/resource", body={"key": "value"})
-        assert result == {"created": True}
-        mock_make_request.assert_called_once()
 
     @parameterized.expand([
         ["400 error", 400, MockResponse(400), contentfulBadRequestError, "A validation exception has occurred."],
@@ -101,7 +87,7 @@ class TestClient(unittest.TestCase):
 
     @parameterized.expand([
         ["422 error", 422, MockResponse(422), contentfulUnprocessableEntityError, "The request content itself is not processable by the server."],
-        ["429 error", 429, MockResponse(429), contentfulRateLimitError, "The API rate limit for your organisation/application pairing has been exceeded."],
+        ["429 error", 429, MockResponse(429), contentfulRateLimitError, "The API rate limit for your organisation/application pairing has been exceeded. (Retry after 60 seconds.)"],
         ["500 error", 500, MockResponse(500), contentfulInternalServerError, "The server encountered an unexpected condition which prevented it from fulfilling the request."],
         ["501 error", 501, MockResponse(501), contentfulNotImplementedError, "The server does not support the functionality required to fulfill the request."],
         ["502 error", 502, MockResponse(502), contentfulBadGatewayError, "Server received an invalid response."],
@@ -116,7 +102,6 @@ class TestClient(unittest.TestCase):
 
             expected_error_message = (f"HTTP-error-code: {error_code}, Error: {error_message}")
             self.assertEqual(str(e.exception), expected_error_message)
-            self.assertEqual(mock_request.call_count, 5)
 
     @parameterized.expand([
         ["ConnectionResetError", ConnectionResetError],

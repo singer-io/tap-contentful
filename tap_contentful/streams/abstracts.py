@@ -11,6 +11,7 @@ from singer import (
     write_schema,
     metadata
 )
+from urllib.parse import urljoin
 
 LOGGER = get_logger()
 
@@ -28,8 +29,8 @@ class BaseStream(ABC):
 
     url_endpoint = ""
     path = ""
-    page_size = 0
-    next_page_key = "pages.next"
+    page_size = 100
+    next_page_key = "pages"
     headers = {'Accept': 'application/json', 'Content-Type': 'application/json'}
     children = []
     parent = ""
@@ -98,23 +99,31 @@ class BaseStream(ABC):
 
 
     def get_records(self) -> Iterator:
-        """Interacts with api client interaction and pagination."""
-        self.params["cursor"] = self.page_size
-        next_page = 1
+        """
+        Fetch records with cursor pagination from Contentful.
+        Handles 'pages.next' which is a relative URL path for the next page.
+        """
+        next_page = self.url_endpoint
         while next_page:
             response = self.client.make_request(
                 self.http_method,
-                self.url_endpoint,
+                next_page,
                 self.params,
                 self.headers,
                 body=json.dumps(self.data_payload),
                 path=self.path
             )
             raw_records = response.get(self.data_key, [])
-            next_page = response.get(self.next_page_key)
-
-            self.params[self.next_page_key] = next_page
             yield from raw_records
+
+            next_page_relative = response.get("pages", {}).get("next")
+
+            if next_page_relative:
+                next_page = urljoin(self.client.base_url, next_page_relative)
+                self.params = {}
+            else:
+                next_page = None
+
 
     def write_schema(self) -> None:
         """
@@ -128,11 +137,17 @@ class BaseStream(ABC):
             )
             raise err
 
-    def update_params(self, **kwargs) -> None:
+    def update_params(self, date = None, **kwargs) -> None:
         """
         Update params for the stream
         """
-        self.params.update(kwargs)
+        params = {}
+        if date:
+            params['sys.updatedAt[gte]'] = date
+        params['order'] = 'sys.createdAt'
+        params['limit'] = self.page_size
+        params['cursor'] = 'true'
+        self.params.update(params)
 
     def update_data_payload(self, **kwargs) -> None:
         """
@@ -200,7 +215,7 @@ class IncrementalStream(BaseStream):
         """Implementation for `type: Incremental` stream."""
         bookmark_date = self.get_bookmark(state, self.tap_stream_id)
         current_max_bookmark_date = bookmark_date
-        self.update_params(updated_since=bookmark_date)
+        self.update_params(date=bookmark_date)
         self.update_data_payload(parent_obj=parent_obj)
         self.url_endpoint = self.get_url_endpoint(parent_obj)
 
@@ -244,6 +259,7 @@ class FullTableStream(BaseStream):
         self.update_data_payload(parent_obj=parent_obj)
         with metrics.record_counter(self.tap_stream_id) as counter:
             for record in self.get_records():
+                record = self.modify_object(record, parent_obj)
                 transformed_record = transformer.transform(
                     record, self.schema, self.metadata
                 )

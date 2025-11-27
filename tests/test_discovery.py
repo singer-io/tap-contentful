@@ -12,4 +12,3 @@ class contentfulDiscoveryTest(DiscoveryTest, contentfulBaseTest):
 
     def streams_to_test(self):
         return self.expected_stream_names()
-

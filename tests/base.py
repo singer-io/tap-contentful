@@ -34,81 +34,91 @@ class contentfulBaseTest(BaseCase):
         """The expected streams and metadata about the streams."""
         return {
             "environments": {
-                cls.PRIMARY_KEYS: { "sys.id" },
-                cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                # we dont have parent stream space we just use space id to get records
+                cls.PRIMARY_KEYS: { "id", "space_id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "organizations": {
-                cls.PRIMARY_KEYS: { "sys.id" },
-                cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "security_contacts": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id", "organization_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "organizations"
             },
             "content_types": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id","space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "environments"
             },
             "environment_templates": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id", "organization_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "organizations"
             },
             "entries": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "environments"
             },
             "assets": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "environments"
             },
             "locales": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "environments"
             },
             "taxonomy_concepts": {
-                cls.PRIMARY_KEYS: { "s, y, s, ., i, d" },
+                cls.PRIMARY_KEYS: { "id", "organization_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "organizations"
             },
             "tags": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "environments"
             },
             "tasks": {
-                cls.PRIMARY_KEYS: { "sys.id" },
+                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "sys.updatedAt" },
+                cls.REPLICATION_KEYS: { "updatedAt" },
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 100
+                cls.API_LIMIT: 100,
+                cls.PARENT_STREAM: "environments"
             }
         }
 
@@ -116,7 +126,7 @@ class contentfulBaseTest(BaseCase):
     def get_credentials():
         """Authentication information for the test account."""
         credentials_dict = {}
-        creds = {'api_token': 'API_TOKEN', 'space_id': 'SPACE_ID', 'start_date': 'start_date'}
+        creds = {'api_token': 'API_TOKEN', 'space_id': 'SPACE_ID'}
 
         for cred in creds:
             credentials_dict[cred] = os.getenv(creds[cred])
@@ -125,12 +135,6 @@ class contentfulBaseTest(BaseCase):
 
     def get_properties(self, original: bool = True):
         """Configuration of properties required for the tap."""
-        return_value = {
-            "start_date": "2022-07-01T00:00:00Z"
+        return {
+            "start_date": self.start_date
         }
-        if original:
-            return return_value
-
-        return_value["start_date"] = self.start_date
-        return return_value
-
