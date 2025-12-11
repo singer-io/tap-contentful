@@ -126,7 +126,7 @@ class contentfulBaseTest(BaseCase):
     def get_credentials():
         """Authentication information for the test account."""
         credentials_dict = {}
-        creds = {'api_token': 'API_TOKEN', 'space_id': 'SPACE_ID'}
+        creds = {'api_token': 'TAP_CONTENTFUL_API_TOKEN', 'space_id': 'TAP_CONTENTFUL_SPACE_ID'}
 
         for cred in creds:
             credentials_dict[cred] = os.getenv(creds[cred])
