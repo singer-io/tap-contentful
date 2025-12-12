@@ -1,0 +1,37 @@
+from tap_contentful.streams.abstracts import ChildBaseStream
+
+class EnvironmentTemplates(ChildBaseStream):
+    tap_stream_id = "environment_templates"
+    key_properties = ["id", "organization_id"]
+    replication_method = "INCREMENTAL"
+    replication_keys = ["updatedAt"]
+    data_key = "items"
+    path = "/organizations/{organization_id}/environment_templates"
+    parent = "organizations"
+    bookmark_value = None
+
+    def get_url_endpoint(self, parent_obj=None):
+        """Prepare URL endpoint for child streams."""
+        env_id = self.get_nested_value(parent_obj, 'id')
+        return f"{self.client.base_url}{self.path.format(organization_id=env_id)}"
+
+    def modify_object(self, record, parent_record=None):
+            """
+            Modify the record before writing to the stream.
+            Move sys.id -> id and sys.updatedAt -> updatedAt
+            """
+            sys_data = record.get("sys", {})
+
+            record["id"] = sys_data.get("id")
+            record["updatedAt"] = sys_data.get("updatedAt")
+            record["organization_id"] = sys_data["id"]
+
+            return record
+
+    def update_params(self, date = None, **kwargs) -> None:
+        """
+        Update params for the stream
+        """
+        params = {}
+        params['limit'] = self.page_size
+        self.params.update(params)
