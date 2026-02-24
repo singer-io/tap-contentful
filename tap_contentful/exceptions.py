@@ -72,6 +72,10 @@ class contentfulServiceUnavailableError(contentfulBackoffError):
     """class representing 503 status code."""
     pass
 
+class contentfulGatewayTimeoutError(contentfulBackoffError):
+    """class representing 504 status code."""
+    pass
+
 ERROR_CODE_EXCEPTION_MAPPING = {
     400: {
         "raise_exception": contentfulBadRequestError,
@@ -117,5 +121,9 @@ ERROR_CODE_EXCEPTION_MAPPING = {
     503: {
         "raise_exception": contentfulServiceUnavailableError,
         "message": "API service is currently unavailable."
+    },
+    504: {
+        "raise_exception": contentfulGatewayTimeoutError,
+        "message": "The server did not receive a timely response from an upstream server."
     }
 }
