@@ -80,12 +80,13 @@ class TestClient(unittest.TestCase):
     ])
     def test_make_request_http_failure_without_retry(self, test_name, error_code, mock_response, error, error_message):
 
-        with patch.object(self.client._session, "request", return_value=mock_response):
+        with patch.object(self.client._session, "request", return_value=mock_response) as mock_request:
             with self.assertRaises(error) as e:
                 self.client._Client__make_request("GET", "https://api.example.com/resource")
 
         expected_error_message = (f"HTTP-error-code: {error_code}, Error: {error_message}")
         self.assertEqual(str(e.exception), expected_error_message)
+        self.assertEqual(mock_request.call_count, 1)
 
     @parameterized.expand([
         ["429 error", 429, MockResponse(429), contentfulRateLimitError, "The API rate limit for your organisation/application pairing has been exceeded. (Retry after 60 seconds.)"],
