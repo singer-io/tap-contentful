@@ -9,9 +9,7 @@ from singer import get_logger, metrics
 from tap_contentful.exceptions import (
     ERROR_CODE_EXCEPTION_MAPPING,
     contentfulError,
-    contentfulBackoffError,
-    contentfulNotImplementedError,
-    contentfulUnprocessableEntityError
+    contentfulBackoffError
 )
 
 LOGGER = get_logger()
@@ -128,7 +126,6 @@ class Client:
             contentfulBackoffError,
         ),
         max_tries=5,
-        giveup=lambda e: isinstance(e, (contentfulNotImplementedError, contentfulUnprocessableEntityError)),
     )
     def __make_request(
         self, method: str, endpoint: str, **kwargs

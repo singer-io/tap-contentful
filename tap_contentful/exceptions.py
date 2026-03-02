@@ -32,7 +32,7 @@ class contentfulConflictError(contentfulError):
     """class representing 409 status code."""
     pass
 
-class contentfulUnprocessableEntityError(contentfulBackoffError):
+class contentfulUnprocessableEntityError(contentfulError):
     """class representing 422 status code."""
     pass
 
@@ -60,20 +60,8 @@ class contentfulInternalServerError(contentfulBackoffError):
     """class representing 500 status code."""
     pass
 
-class contentfulNotImplementedError(contentfulBackoffError):
-    """class representing 501 status code."""
-    pass
-
 class contentfulBadGatewayError(contentfulBackoffError):
     """class representing 502 status code."""
-    pass
-
-class contentfulServiceUnavailableError(contentfulBackoffError):
-    """class representing 503 status code."""
-    pass
-
-class contentfulGatewayTimeoutError(contentfulBackoffError):
-    """class representing 504 status code."""
     pass
 
 ERROR_CODE_EXCEPTION_MAPPING = {
@@ -110,20 +98,8 @@ ERROR_CODE_EXCEPTION_MAPPING = {
         "message": "The server encountered an unexpected condition which prevented" \
             " it from fulfilling the request."
     },
-    501: {
-        "raise_exception": contentfulNotImplementedError,
-        "message": "The server does not support the functionality required to fulfill the request."
-    },
     502: {
         "raise_exception": contentfulBadGatewayError,
         "message": "Server received an invalid response."
-    },
-    503: {
-        "raise_exception": contentfulServiceUnavailableError,
-        "message": "API service is currently unavailable."
-    },
-    504: {
-        "raise_exception": contentfulGatewayTimeoutError,
-        "message": "The server did not receive a timely response from an upstream server."
     }
 }
