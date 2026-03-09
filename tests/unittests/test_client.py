@@ -142,3 +142,25 @@ class TestClient(unittest.TestCase):
             self.assertEqual(str(e.exception), expected_error_message)
             # Verify backoff retry happened - should retry 5 times
             self.assertEqual(mock_request.call_count, 5)
+
+    @parameterized.expand([
+        # Below 5xx range — contentfulError, no retry
+        ["status_499", 499, contentfulError, 1],
+        # All 5xx errors (500-599) — contentfulBackoffError, retried
+        ["status_500", 500, contentfulBackoffError, 5],
+        ["status_550", 550, contentfulBackoffError, 5],
+        ["status_599", 599, contentfulBackoffError, 5],
+        # Above 5xx range — contentfulError, no retry
+        ["status_600", 600, contentfulError, 1],
+    ])
+    @patch("time.sleep")
+    def test_5xx_range_boundary_checks(self, test_name, status_code, expected_exception, expected_call_count, mock_sleep):
+        """Test that the correct exception is raised at 5xx range boundaries."""
+        mock_response = MockResponse(status_code)
+
+        with patch.object(self.client._session, "request", return_value=mock_response) as mock_request:
+            with self.assertRaises(expected_exception):
+                self.client._Client__make_request("GET", "https://api.example.com/resource")
+
+            # Verify retry behavior
+            self.assertEqual(mock_request.call_count, expected_call_count)
