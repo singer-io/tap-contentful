@@ -40,7 +40,7 @@ def raise_for_error(response: requests.Response) -> None:
         )
 
         # For 5xx errors, use backoff exception if not specifically mapped
-        if 500 <= response.status_code < 600 and response.status_code not in ERROR_CODE_EXCEPTION_MAPPING.keys():
+        if 500 <= response.status_code < 600 and response.status_code not in ERROR_CODE_EXCEPTION_MAPPING:
             exc = contentfulBackoffError
 
         raise exc(message, response) from None
