@@ -12,8 +12,6 @@ class contentfulPaginationTest(PaginationTest, contentfulBaseTest):
 
     def streams_to_test(self):
         streams_to_exclude = {
-            # Not have permission
-            'environment_templates',
             'security_contacts',
             'tasks'
         }
