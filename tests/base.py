@@ -23,7 +23,7 @@ class contentfulBaseTest(BaseCase):
     # available in all environments. The tap excludes these dynamically
     # at discovery time (401/403/422). Update this set if the test
     # account gains or loses access.
-    PERMISSION_DEPENDENT_STREAMS = {"environment_templates"}
+    PERMISSION_DEPENDENT_STREAMS = {}
 
     @staticmethod
     def tap_name():
@@ -41,87 +41,87 @@ class contentfulBaseTest(BaseCase):
         return {
             "environments": {
                 # we dont have parent stream space we just use space id to get records
-                cls.PRIMARY_KEYS: { "id", "space_id" },
+                cls.PRIMARY_KEYS: {"id", "space_id"},
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "organizations": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: {"id"},
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100
             },
             "security_contacts": {
-                cls.PRIMARY_KEYS: { "id", "organization_id" },
+                cls.PRIMARY_KEYS: {"id", "organization_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "organizations"
             },
             "content_types": {
-                cls.PRIMARY_KEYS: { "id","space_id", "environment_id" },
+                cls.PRIMARY_KEYS: {"id", "space_id", "environment_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "environments"
             },
             "entries": {
-                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
+                cls.PRIMARY_KEYS: {"id", "space_id", "environment_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "environments"
             },
             "assets": {
-                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
+                cls.PRIMARY_KEYS: {"id", "space_id", "environment_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "environments"
             },
             "locales": {
-                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
+                cls.PRIMARY_KEYS: {"id", "space_id", "environment_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "environments"
             },
             "taxonomy_concepts": {
-                cls.PRIMARY_KEYS: { "id", "organization_id" },
+                cls.PRIMARY_KEYS: {"id", "organization_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "organizations"
             },
             "tags": {
-                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
+                cls.PRIMARY_KEYS: {"id", "space_id", "environment_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "environments"
             },
             "tasks": {
-                cls.PRIMARY_KEYS: { "id", "space_id", "environment_id" },
+                cls.PRIMARY_KEYS: {"id", "space_id", "environment_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "environments"
             },
             "environment_templates": {
-                cls.PRIMARY_KEYS: { "id", "organization_id" },
+                cls.PRIMARY_KEYS: {"id", "organization_id"},
                 cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedAt" },
+                cls.REPLICATION_KEYS: {"updatedAt"},
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 100,
                 cls.PARENT_STREAM: "organizations"
