@@ -102,11 +102,38 @@ def is_stream_available(client, stream_name, probe_url):
         return False
 
 
+def _check_connectivity(client):
+    """
+    Verify basic API connectivity before probing individual streams.
+    Uses the space environments endpoint as a health check.
+    Returns True if credentials are valid, False otherwise.
+    """
+    space_id = client.config.get('space_id', '')
+    url = f"{client.base_url}/spaces/{space_id}/environments"
+    try:
+        client.make_request(
+            "GET", url, params={"limit": 1}, headers={}
+        )
+        return True
+    except _STREAM_UNAVAILABLE_EXCEPTIONS:
+        LOGGER.warning(
+            "Basic connectivity check failed. Skipping stream "
+            "availability probing to avoid incorrect exclusions."
+        )
+        return False
+
+
 def _get_unavailable_streams(client):
     """
     Probe all stream endpoints and return the set of stream names that are unavailable.
     """
     unavailable = set()
+
+    # Verify credentials work before probing individual streams.
+    # If basic connectivity fails, skip probing entirely so we don't
+    # incorrectly exclude streams due to a general auth issue.
+    if not _check_connectivity(client):
+        return unavailable
 
     # Resolve org-child probe URLs (requires fetching an org ID first)
     org_child_urls = _resolve_org_probe_urls(client)
