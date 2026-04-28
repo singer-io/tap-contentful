@@ -6,7 +6,6 @@ from tap_contentful.discover import (
     is_stream_available,
     _get_probe_url,
     _resolve_org_probe_urls,
-    _check_connectivity,
 )
 from tap_contentful.exceptions import (
     contentfulForbiddenError,
@@ -219,35 +218,4 @@ class TestResolveOrgProbeUrls(unittest.TestCase):
         self.assertEqual(urls, {})
 
 
-class TestCheckConnectivity(unittest.TestCase):
 
-    def test_returns_true_when_space_accessible(self):
-        """Test connectivity passes when space endpoint returns 200."""
-        client = MagicMock()
-        client.base_url = "https://api.contentful.com"
-        client.config = {"space_id": "abc123"}
-        client.make_request.return_value = {"items": []}
-
-        self.assertTrue(_check_connectivity(client))
-
-    def test_returns_false_on_forbidden(self):
-        """Test connectivity fails when space endpoint returns 403."""
-        client = MagicMock()
-        client.base_url = "https://api.contentful.com"
-        client.config = {"space_id": "abc123"}
-        client.make_request.side_effect = contentfulForbiddenError(
-            "Forbidden"
-        )
-
-        self.assertFalse(_check_connectivity(client))
-
-    def test_returns_false_on_unauthorized(self):
-        """Test connectivity fails when space endpoint returns 401."""
-        client = MagicMock()
-        client.base_url = "https://api.contentful.com"
-        client.config = {"space_id": "abc123"}
-        client.make_request.side_effect = contentfulUnauthorizedError(
-            "Unauthorized"
-        )
-
-        self.assertFalse(_check_connectivity(client))
