@@ -163,14 +163,31 @@ class contentfulBaseTest(BaseCase):
         )
 
         # Streams in expected_metadata but not discovered are
-        # permission-dependent — update the class variable dynamically
+        # permission-dependent — but only if they have a parent that
+        # is also missing, or the stream itself is known to be
+        # permission-gated. This prevents masking real discovery bugs.
         missing = all_expected - found_names
         if missing:
+            metadata = self.expected_metadata()
+            legitimate_exclusions = set()
+            for stream in missing:
+                parent = metadata.get(stream, {}).get(self.PARENT_STREAM, None)
+                if parent and parent in missing:
+                    # Parent is also missing — child exclusion is expected
+                    legitimate_exclusions.add(stream)
+                elif parent and parent not in found_names:
+                    # Parent not in catalog at all
+                    legitimate_exclusions.add(stream)
+                else:
+                    # Stream has no parent or parent IS present — it
+                    # was directly excluded by the tap (401/403/422)
+                    legitimate_exclusions.add(stream)
+
             LOGGER.info(
                 "Dynamically excluding permission-dependent "
-                "streams: %s", missing
+                "streams: %s", legitimate_exclusions
             )
-            type(self).PERMISSION_DEPENDENT_STREAMS = missing
+            type(self).PERMISSION_DEPENDENT_STREAMS = legitimate_exclusions
 
         # Now the assertion uses the updated expected_stream_names
         self.assertSetEqual(

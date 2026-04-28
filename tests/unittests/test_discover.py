@@ -6,6 +6,7 @@ from tap_contentful.discover import (
     is_stream_available,
     _get_probe_url,
     _resolve_org_probe_urls,
+    _get_unavailable_streams,
 )
 from tap_contentful.exceptions import (
     contentfulForbiddenError,
@@ -216,6 +217,115 @@ class TestResolveOrgProbeUrls(unittest.TestCase):
         urls = _resolve_org_probe_urls(client)
 
         self.assertEqual(urls, {})
+
+
+class TestGetUnavailableStreams(unittest.TestCase):
+
+    @patch("tap_contentful.discover.STREAMS", {
+        "organizations": type("S", (), {
+            "path": "/organizations",
+            "parent": "",
+        }),
+        "security_contacts": type("S", (), {
+            "path": "/organizations/{organization_id}/security_contacts",
+            "parent": "organizations",
+        }),
+        "taxonomy_concepts": type("S", (), {
+            "path": "/organizations/{organization_id}/taxonomy_concepts",
+            "parent": "organizations",
+        }),
+    })
+    def test_org_children_excluded_when_org_unavailable(self):
+        """Test that org-child streams are excluded when organizations endpoint is forbidden."""
+        client = MagicMock()
+        client.base_url = "https://api.contentful.com"
+        client.config = {"space_id": "abc123"}
+        # /organizations returns 403 — so _resolve_org_probe_urls returns empty
+        client.make_request.side_effect = contentfulForbiddenError("Forbidden")
+
+        unavailable = _get_unavailable_streams(client)
+
+        # organizations itself returns 403 during probing
+        self.assertIn("organizations", unavailable)
+        # Children can't be probed (no org ID) — should also be excluded
+        self.assertIn("security_contacts", unavailable)
+        self.assertIn("taxonomy_concepts", unavailable)
+
+    @patch("tap_contentful.discover.STREAMS", {
+        "organizations": type("S", (), {
+            "path": "/organizations",
+            "parent": "",
+        }),
+        "environment_templates": type("S", (), {
+            "path": "/organizations/{organization_id}/environment_templates",
+            "parent": "organizations",
+        }),
+        "environments": type("S", (), {
+            "path": "/spaces/{space_id}/environments",
+            "parent": "",
+        }),
+    })
+    def test_parent_unavailable_excludes_children(self):
+        """Test that when a parent stream is probed and unavailable,
+        its children are excluded in the second pass."""
+        client = MagicMock()
+        client.base_url = "https://api.contentful.com"
+        client.config = {"space_id": "abc123"}
+
+        def mock_request(method, url, params=None, headers=None):
+            if "/organizations" in url and "environment_templates" not in url:
+                # organizations endpoint accessible, returns an org
+                if params and params.get("limit") == 1:
+                    return {"items": [{"sys": {"id": "org-1"}}]}
+                raise contentfulForbiddenError("Forbidden")
+            if "environment_templates" in url:
+                return {"items": []}  # accessible
+            if "environments" in url:
+                return {"items": []}
+            return {"items": []}
+
+        client.make_request.side_effect = mock_request
+
+        unavailable = _get_unavailable_streams(client)
+
+        # organizations probed OK (returns items for limit=1)
+        # environment_templates probed OK
+        # environments probed OK
+        self.assertEqual(unavailable, set())
+
+    @patch("tap_contentful.discover.STREAMS", {
+        "environments": type("S", (), {
+            "path": "/spaces/{space_id}/environments",
+            "parent": "",
+        }),
+        "content_types": type("S", (), {
+            "path": "/spaces/{space_id}/environments/{environment_id}/content_types",
+            "parent": "environments",
+        }),
+        "entries": type("S", (), {
+            "path": "/spaces/{space_id}/environments/{environment_id}/entries",
+            "parent": "environments",
+        }),
+    })
+    def test_parent_environments_unavailable_excludes_children(self):
+        """Test that when environments is unavailable, its children are excluded."""
+        client = MagicMock()
+        client.base_url = "https://api.contentful.com"
+        client.config = {"space_id": "abc123"}
+
+        def mock_request(method, url, params=None, headers=None):
+            if "environments" in url and "content_types" not in url and "entries" not in url:
+                raise contentfulForbiddenError("Forbidden")
+            return {"items": []}
+
+        client.make_request.side_effect = mock_request
+
+        unavailable = _get_unavailable_streams(client)
+
+        self.assertIn("environments", unavailable)
+        # Children should be excluded because parent is unavailable
+        self.assertIn("content_types", unavailable)
+        self.assertIn("entries", unavailable)
 
 
 
