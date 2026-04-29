@@ -24,9 +24,14 @@ def _get_probe_url(client, stream_cls):
     """
     Build a probe URL for a stream, resolving path parameters from the client config.
     Returns None if the URL cannot be resolved (e.g. missing parent IDs).
+    Org-child streams (paths with organization_id) are handled by _resolve_org_probe_urls.
     """
     path = getattr(stream_cls, 'path', '')
     if not path:
+        return None
+
+    # Org-child paths are resolved separately via _resolve_org_probe_urls
+    if '{organization_id}' in path or '{organizationId}' in path:
         return None
 
     space_id = client.config.get('space_id', '')
@@ -35,8 +40,6 @@ def _get_probe_url(client, stream_cls):
         url = f"{client.base_url}{path}".format(
             space_id=space_id,
             environment_id='master',
-            organization_id='{org_id}',
-            organizationId='{org_id}',
         )
     except (KeyError, IndexError):
         return None
