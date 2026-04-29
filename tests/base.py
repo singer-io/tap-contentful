@@ -19,6 +19,13 @@ class contentfulBaseTest(BaseCase):
     """
     start_date = "2019-01-01T00:00:00Z"
 
+    # Streams that are known to be permission-gated at the API level
+    # and may be excluded by the tap during discovery probing.
+    KNOWN_PERMISSION_GATED_STREAMS = {
+        "organizations", "environment_templates",
+        "security_contacts", "taxonomy_concepts",
+    }
+
     # Populated dynamically by run_and_verify_check_mode based on
     # which streams the tap excludes at discovery time (401/403/422).
     PERMISSION_DEPENDENT_STREAMS = set()
@@ -164,8 +171,8 @@ class contentfulBaseTest(BaseCase):
 
         # Streams in expected_metadata but not discovered are
         # permission-dependent — only accept child streams whose parent
-        # is also missing. Standalone streams missing without explanation
-        # indicate a real discovery regression.
+        # is also missing, or streams in the known permission-gated list.
+        # Any other missing stream is a real discovery regression.
         missing = all_expected - found_names
         if missing:
             metadata = self.expected_metadata()
@@ -179,21 +186,23 @@ class contentfulBaseTest(BaseCase):
                 elif parent and parent not in found_names:
                     # Parent not in catalog at all
                     legitimate_exclusions.add(stream)
+                elif stream in self.KNOWN_PERMISSION_GATED_STREAMS:
+                    # Known permission-gated stream excluded by tap
+                    legitimate_exclusions.add(stream)
                 else:
-                    # Stream has no parent or parent IS present —
-                    # could be a genuine permission gate or a bug
                     unexplained.add(stream)
 
-            # Unexplained missing streams: fail unless they are
-            # known permission-gated streams (parent streams that
-            # gate their own children, e.g. organizations)
-            if unexplained:
-                LOGGER.warning(
-                    "Streams missing from discovery without a missing "
-                    "parent: %s — treating as permission-gated.",
-                    unexplained,
-                )
-                legitimate_exclusions.update(unexplained)
+            # Fail if any streams are missing without explanation
+            self.assertEqual(
+                unexplained, set(),
+                msg=(
+                    f"Streams missing from discovery that are NOT in "
+                    f"KNOWN_PERMISSION_GATED_STREAMS and have no missing "
+                    f"parent: {unexplained}. If these are legitimately "
+                    f"permission-gated, add them to "
+                    f"KNOWN_PERMISSION_GATED_STREAMS."
+                ),
+            )
 
             LOGGER.info(
                 "Dynamically excluding permission-dependent "
