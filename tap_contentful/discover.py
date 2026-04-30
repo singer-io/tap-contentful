@@ -161,7 +161,7 @@ def discover(client: Client) -> Catalog:
     schemas, field_metadata = get_schemas()
     catalog = Catalog([])
 
-    unavailable = _get_unavailable_streams(client) if client else set()
+    unavailable = _get_unavailable_streams(client)
 
     for stream_name, schema_dict in schemas.items():
         if stream_name in unavailable:
