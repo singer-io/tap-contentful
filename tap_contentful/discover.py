@@ -153,7 +153,7 @@ def _get_unavailable_streams(client):
     return unavailable
 
 
-def discover(client=None) -> Catalog:
+def discover(client) -> Catalog:
     """
     Run the discovery mode, prepare the catalog file and return the catalog.
     """
