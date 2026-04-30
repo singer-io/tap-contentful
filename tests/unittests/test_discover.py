@@ -46,11 +46,12 @@ class TestDiscover(unittest.TestCase):
     @patch("tap_contentful.discover.get_schemas")
     @patch("singer.metadata.to_map")
     def test_discover(self, mock_to_map, mock_get_schemas):
-        """Test the discover function without client (backward compatible)."""
+        """Test the discover function returns a valid catalog."""
         mock_get_schemas.return_value = (self.dummy_schema, self.dummy_metadata)
         mock_to_map.return_value = self.dummy_metadata[self.test_stream_name]
 
-        catalog_obj = discover()
+        client = MagicMock()
+        catalog_obj = discover(client)
 
         self.assertIsNotNone(catalog_obj)
         self.assertEqual(len(catalog_obj.streams), 1)
@@ -84,8 +85,9 @@ class TestDiscover(unittest.TestCase):
         with patch("tap_contentful.discover.get_schemas") as mock_get_schemas:
             mock_get_schemas.return_value = ({"invalid_stream": "invalid_schema"}, {})
 
+            client = MagicMock()
             with self.assertRaises(Exception):
-                discover()
+                discover(client)
 
 
 class TestIsStreamAvailable(unittest.TestCase):

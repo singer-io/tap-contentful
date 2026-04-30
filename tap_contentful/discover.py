@@ -7,6 +7,7 @@ from tap_contentful.exceptions import (
     contentfulUnauthorizedError,
     contentfulUnprocessableEntityError,
 )
+from tap_contentful.client import Client
 from tap_contentful.schema import get_schemas
 from tap_contentful.streams import STREAMS
 
@@ -153,7 +154,7 @@ def _get_unavailable_streams(client):
     return unavailable
 
 
-def discover(client) -> Catalog:
+def discover(client: Client) -> Catalog:
     """
     Run the discovery mode, prepare the catalog file and return the catalog.
     """
