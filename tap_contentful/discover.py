@@ -25,13 +25,13 @@ def _get_probe_url(client, stream_cls):
     """
     Build a probe URL for a stream, resolving path parameters from the client config.
     Returns None if the URL cannot be resolved (e.g. missing parent IDs).
-    Org-child streams (paths with organization_id) are handled by _resolve_org_probe_urls.
+    Org-child streams (paths with organization_id) are handled by _get_org_probe_urls.
     """
     path = getattr(stream_cls, 'path', '')
     if not path:
         return None
 
-    # Org-child paths are resolved separately via _resolve_org_probe_urls
+    # Org-child paths are resolved separately via _get_org_probe_urls
     if '{organization_id}' in path or '{organizationId}' in path:
         return None
 
@@ -48,12 +48,12 @@ def _get_probe_url(client, stream_cls):
     return url
 
 
-def _resolve_org_probe_urls(client):
+def _get_org_probe_urls(client:Client):
     """
     Fetch the first organization ID and return resolved probe URLs for org-child streams.
     Returns a dict of {stream_name: probe_url}.
     """
-    resolved = {}
+    probe_urls = {}
     org_id = None
 
     # Fetch first org ID
@@ -69,7 +69,7 @@ def _resolve_org_probe_urls(client):
         pass
 
     if not org_id:
-        return resolved
+        return probe_urls
 
     for stream_name, stream_cls in STREAMS.items():
         parent = getattr(stream_cls, 'parent', '')
@@ -81,11 +81,11 @@ def _resolve_org_probe_urls(client):
                 organization_id=org_id,
                 organizationId=org_id,
             )
-            resolved[stream_name] = url
+            probe_urls[stream_name] = url
         except (KeyError, IndexError):
             pass
 
-    return resolved
+    return probe_urls
 
 
 def is_stream_available(client, stream_name, probe_url):
@@ -106,7 +106,7 @@ def is_stream_available(client, stream_name, probe_url):
         return False
 
 
-def _get_unavailable_streams(client):
+def _get_unavailable_streams(client:Client):
     """
     Probe all stream endpoints and return the set of stream names that are unavailable.
 
@@ -116,7 +116,7 @@ def _get_unavailable_streams(client):
     unavailable = set()
 
     # Resolve org-child probe URLs (requires fetching an org ID first)
-    org_child_urls = _resolve_org_probe_urls(client)
+    org_child_urls = _get_org_probe_urls(client)
 
     # First pass: probe all streams
     for stream_name, stream_cls in STREAMS.items():

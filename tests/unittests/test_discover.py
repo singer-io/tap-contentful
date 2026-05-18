@@ -5,7 +5,7 @@ from tap_contentful.discover import (
     discover,
     is_stream_available,
     _get_probe_url,
-    _resolve_org_probe_urls,
+    _get_org_probe_urls,
     _get_unavailable_streams,
 )
 from tap_contentful.exceptions import (
@@ -183,7 +183,7 @@ class TestResolveOrgProbeUrls(unittest.TestCase):
             "items": [{"sys": {"id": "org-123"}}]
         }
 
-        urls = _resolve_org_probe_urls(client)
+        urls = _get_org_probe_urls(client)
 
         self.assertIn("environment_templates", urls)
         self.assertIn("org-123", urls["environment_templates"])
@@ -200,7 +200,7 @@ class TestResolveOrgProbeUrls(unittest.TestCase):
         client.base_url = "https://api.contentful.com"
         client.make_request.return_value = {"items": []}
 
-        urls = _resolve_org_probe_urls(client)
+        urls = _get_org_probe_urls(client)
 
         self.assertEqual(urls, {})
 
@@ -216,7 +216,7 @@ class TestResolveOrgProbeUrls(unittest.TestCase):
         client.base_url = "https://api.contentful.com"
         client.make_request.side_effect = contentfulForbiddenError("Forbidden")
 
-        urls = _resolve_org_probe_urls(client)
+        urls = _get_org_probe_urls(client)
 
         self.assertEqual(urls, {})
 
@@ -242,7 +242,7 @@ class TestGetUnavailableStreams(unittest.TestCase):
         client = MagicMock()
         client.base_url = "https://api.contentful.com"
         client.config = {"space_id": "abc123"}
-        # /organizations returns 403 — so _resolve_org_probe_urls returns empty
+        # /organizations returns 403 — so _get_org_probe_urls returns empty
         client.make_request.side_effect = contentfulForbiddenError("Forbidden")
 
         unavailable = _get_unavailable_streams(client)
