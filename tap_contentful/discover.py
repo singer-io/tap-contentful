@@ -110,22 +110,45 @@ def _get_unavailable_streams(client:Client):
     """
     Probe all stream endpoints and return the set of stream names that are unavailable.
 
-    If a parent stream is unavailable, all its children are also marked unavailable
-    to prevent sync crashes when the parent catalog entry is missing.
+    Parent streams are probed first. If a parent is unavailable, all its children
+    are excluded immediately without probing, to avoid unnecessary API calls.
     """
     unavailable = set()
 
     # Resolve org-child probe URLs (requires fetching an org ID first)
     org_child_urls = _get_org_probe_urls(client)
 
-    # First pass: probe all streams
+    # First pass: probe parent streams only (streams with no parent)
     for stream_name, stream_cls in STREAMS.items():
         parent = getattr(stream_cls, 'parent', '')
+        if parent:
+            continue  # Skip child streams in first pass
+
+        probe_url = _get_probe_url(client, stream_cls)
+        if not probe_url:
+            continue
+
+        if not is_stream_available(client, stream_name, probe_url):
+            unavailable.add(stream_name)
+
+    # Second pass: probe child streams, skipping those whose parent is unavailable
+    for stream_name, stream_cls in STREAMS.items():
+        parent = getattr(stream_cls, 'parent', '')
+        if not parent:
+            continue  # Skip parent streams (already handled)
+
+        # If parent is unavailable, exclude child without probing
+        if parent in unavailable:
+            LOGGER.warning(
+                "Excluding child stream '%s' because parent stream '%s' is unavailable.",
+                stream_name, parent,
+            )
+            unavailable.add(stream_name)
+            continue
 
         if parent == 'organizations':
             probe_url = org_child_urls.get(stream_name)
             if not probe_url:
-                # Can't probe — org unavailable; mark child as unavailable
                 LOGGER.warning(
                     "Excluding child stream '%s': unable to resolve probe URL "
                     "(parent 'organizations' may be unavailable).",
@@ -139,16 +162,6 @@ def _get_unavailable_streams(client:Client):
                 continue
 
         if not is_stream_available(client, stream_name, probe_url):
-            unavailable.add(stream_name)
-
-    # Second pass: if a parent is unavailable, exclude all its children
-    for stream_name, stream_cls in STREAMS.items():
-        parent = getattr(stream_cls, 'parent', '')
-        if parent and parent in unavailable and stream_name not in unavailable:
-            LOGGER.warning(
-                "Excluding child stream '%s' because parent stream '%s' is unavailable.",
-                stream_name, parent,
-            )
             unavailable.add(stream_name)
 
     return unavailable
