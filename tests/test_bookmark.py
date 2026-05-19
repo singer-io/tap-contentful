@@ -28,8 +28,6 @@ class contentfulBookMarkTest(BookmarkTest, contentfulBaseTest):
             # Unsupported Full-Table Streams
             'environments',
             'organizations',
-            # Not have permission
-            'environment_templates'
         }
         return self.expected_stream_names().difference(streams_to_exclude)
 

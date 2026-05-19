@@ -19,7 +19,5 @@ class contentfulAllFields(AllFieldsTest, contentfulBaseTest):
             # No data available for streams
             'security_contacts',
             'tasks',
-            # Not have permission
-            'environment_templates'
         }
         return self.expected_stream_names().difference(streams_to_exclude)

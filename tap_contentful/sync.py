@@ -25,7 +25,15 @@ def write_schema(stream, client, streams_to_sync, catalog) -> None:
         stream.write_schema()
 
     for child in stream.children:
-        child_obj = STREAMS[child](client, catalog.get_stream(child))
+        child_catalog = catalog.get_stream(child)
+        if not child_catalog:
+            LOGGER.warning(
+                "Skipping child stream '%s': not found in catalog "
+                "(excluded during discovery or not selected).",
+                child,
+            )
+            continue
+        child_obj = STREAMS[child](client, child_catalog)
         write_schema(child_obj, client, streams_to_sync, catalog)
         if child in streams_to_sync:
             stream.child_to_sync.append(child_obj)
