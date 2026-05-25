@@ -15,6 +15,7 @@ from tap_contentful.exceptions import (
 LOGGER = get_logger()
 REQUEST_TIMEOUT = 300
 
+
 def raise_for_error(response: requests.Response) -> None:
     """Raises the associated response exception. Takes in a response object,
     checks the status code, and throws the associated exception based on the
@@ -80,7 +81,14 @@ class Client:
         self._session.close()
 
     def check_api_credentials(self) -> None:
-        pass
+        """Checks if the provided API credentials are valid by making a test request."""
+        LOGGER.info("Checking API credentials")
+
+        space_id = self.config["space_id"]
+        endpoint = f"{self.base_url}/spaces/{space_id}"  # Use the space_id also
+        self.make_request("GET", endpoint, params={"limit": 1})
+
+        LOGGER.info("API credentials are valid")
 
     def authenticate(self, headers: Dict, params: Dict) -> Tuple[Dict, Dict]:
         """Authenticates the request with the token"""

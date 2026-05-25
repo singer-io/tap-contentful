@@ -164,3 +164,62 @@ class TestClient(unittest.TestCase):
 
             # Verify retry behavior
             self.assertEqual(mock_request.call_count, expected_call_count)
+
+
+class TestCheckApiCredentials(unittest.TestCase):
+    """Tests for Client.check_api_credentials."""
+
+    def setUp(self):
+        self.config = {
+            "api_token": "dummy_token",
+            "space_id": "my_space",
+            "request_timeout": 30,
+        }
+        self.client = Client(self.config)
+
+    def test_check_api_credentials_calls_correct_endpoint(self):
+        mock_response = MockResponse(200, text={})
+        with patch.object(self.client._session, "request", return_value=mock_response) as mock_req:
+            self.client.check_api_credentials()
+        called_url = mock_req.call_args[0][1]
+        self.assertEqual(called_url, "https://api.contentful.com/spaces/my_space")
+
+    def test_check_api_credentials_raises_on_unauthorized(self):
+        mock_response = MockResponse(401)
+        with patch.object(self.client._session, "request", return_value=mock_response):
+            with self.assertRaises(contentfulUnauthorizedError):
+                self.client.check_api_credentials()
+
+
+class TestClientContextManager(unittest.TestCase):
+    """Tests for Client __enter__ and __exit__ context manager behaviour."""
+
+    def setUp(self):
+        self.config = {
+            "api_token": "dummy_token",
+            "space_id": "my_space",
+            "request_timeout": 30,
+        }
+
+    def test_enter_returns_client_instance(self):
+        mock_response = MockResponse(200, text={})
+        client = Client(self.config)
+        with patch.object(client._session, "request", return_value=mock_response):
+            result = client.__enter__()
+        self.assertIs(result, client)
+
+    def test_exit_closes_session(self):
+        mock_response = MockResponse(200, text={})
+        client = Client(self.config)
+        with patch.object(client._session, "request", return_value=mock_response):
+            with patch.object(client._session, "close") as mock_close:
+                with client:
+                    pass
+        mock_close.assert_called_once()
+
+    def test_context_manager_calls_check_credentials_on_enter(self):
+        client = Client(self.config)
+        with patch.object(client, "check_api_credentials") as mock_check:
+            with patch.object(client._session, "close"):
+                client.__enter__()
+        mock_check.assert_called_once()
